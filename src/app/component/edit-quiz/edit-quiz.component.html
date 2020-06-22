@@ -1,0 +1,109 @@
+<h4>Edit Quiz</h4>
+<hr>
+<div class="jumbotron">
+    <div class="container">
+        <!-- <div class="row"> -->
+        <!-- <div class="col-md-6 offset-md-3"> -->
+        <!-- <h3>Add Questions</h3> -->
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label> Question</label>
+                        <textarea type="text" formControlName="question" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.question.errors }"
+                            placeholder="Max  250 Words" maxlength="250"></textarea>
+                        <div *ngIf="submitted && f.question.errors" class="invalid-feedback">
+                            <div *ngIf="f.question.errors.required">Question is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div formGroupName="options">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Add Options</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Option A</label>
+                        <input type="text" formControlName="optionA" class="form-control"/>
+                            <!-- [ngClass]="{ 'is-invalid': submitted && f.optionA.errors }" />
+                        <div *ngIf="submitted && f.optionA.errors" class="invalid-feedback">
+                            <div *ngIf="f.optionA.errors.required">Option is required</div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Option B</label>
+                        <input type="text" formControlName="optionB" class="form-control"/>
+                            <!-- [ngClass]="{ 'is-invalid': submitted && f.optionB.errors }" />
+                        <div *ngIf="submitted && f.optionB.errors" class="invalid-feedback">
+                            <div *ngIf="f.optionB.errors.required">optionB is required</div> -->
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Option C</label>
+                        <input type="text" formControlName="optionC" class="form-control"/>
+                            <!-- [ngClass]="{ 'is-invalid': submitted && f.optionC.errors }" />
+                        <div *ngIf="submitted && f.optionC.errors" class="invalid-feedback">
+                            <div *ngIf="f.optionC.errors.required">Option C is required</div> -->
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Option D</label>
+                        <input type="text" formControlName="optionD" class="form-control"/>
+                            <!-- [ngClass]="{ 'is-invalid': submitted && f.optionD.errors }" />
+                        <div *ngIf="submitted && f.optionD.errors" class="invalid-feedback">
+                            <div *ngIf="f.optionD.errors.required">Option D is required</div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Correct Option </label>
+                        <input type="text" formControlName="correctoption" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.correctoption.errors }"
+                            placeholder="Please Enter A | B | C | D" maxlength="1"/>
+                        <div *ngIf="submitted && f.correctoption.errors" class="invalid-feedback">
+                            <div *ngIf="f.correctoption.errors.required">Correct Option is required</div>
+                            <div *ngIf="f.correctoption.errors.pattern">Please Enter A | B | C | D"</div> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status on Mobile App</label>
+                            <select class="form-control"  formControlName="status">
+                                <option value="" disabled>ON/OFF on Mobile App</option>
+                                <option [ngValue]="1">ON</option>
+                                <option [ngValue]="0">OFF</option>
+                            </select>
+                        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                            <div *ngIf="f.challange.errors.required">Status is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Update Quiz</button>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+        </div>
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+<!-- </div>
+</div> -->

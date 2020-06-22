@@ -1,0 +1,44 @@
+<h4>Manage Quiz</h4><hr>
+<div class="container">
+    <!-- No data message -->
+    <!-- <p *ngIf="QuizData.length <= 0" class="no-data text-center">There is no QuizData added yet!</p> -->
+  
+    <!-- QuizData list -->
+    <table class="table table-bordered" >
+      <thead class="table-success">
+        <tr>
+          <th scope="col">#</th>
+          <!-- <th scope="col">id</th> -->
+          <th scope="col">Question</th>
+          <th scope="col">Options</th>
+          <th scope="col">Correct Option</th>
+          <th scope="col">Status</th>
+          <th scope="col center">Edit/Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of QuizData.posts; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <!-- <th scope="row">{{data._id}}</th> -->
+          <td>{{data.question}}</td>
+          <td class="rowspan=4">
+            <span>{{data.options.optionA}}<br></span>
+            <span>{{data.options.optionB}}<br></span>
+            <span>{{data.options.optionC}}<br></span>
+            <span>{{data.options.optionD}}<br></span>
+        </td>
+          <td>{{data.correctoption}}</td>
+          <td><span *ngIf="data.status==1">ON</span>
+            <span *ngIf="data.status==0">OFF</span></td>
+          <td class="text-center edit-block">
+            <span class="edit" [routerLink]="['/edit-quiz/', data._id]">
+              <button type="button" class="btn btn-success btn-sm">Edit</button>
+            </span>
+            <span class="delete" (click)="removeQuizData(data,i)">
+              <button type="button" class="btn btn-danger btn-sm">Delete</button>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

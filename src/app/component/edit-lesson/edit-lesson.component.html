@@ -1,0 +1,92 @@
+<!-- main app container -->
+<h4>Edit Lesson</h4>
+<hr>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label>Audio</label>
+                        <input type="file" formControlName="audioFilePath" accept="audio/*" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.audioFilePath.errors }" 
+                            (change)="onFileSelected($event)"  />{{audiofilepath}}
+                        <div *ngIf="submitted && f.audioFilePath.errors" class="invalid-feedback">
+                            <div *ngIf="f.audioFilePath.errors.required">Audio is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Summary</label>
+                        <textarea type="text" formControlName="summary" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.summary.errors }"></textarea>
+                        <div *ngIf="submitted && f.summary.errors" class="invalid-feedback">
+                            <div *ngIf="f.summary.errors.required">Summary is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Challenge</label>
+                        <textarea type="text" formControlName="challange" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.challange.errors }"></textarea>
+                        <div *ngIf="submitted && f.challange.errors" class="invalid-feedback">
+                            <div *ngIf="f.challange.errors.required">challenge is required</div>
+                            <!-- <div *ngIf="f.challenge.errors.challenge">challenge must be a valid challenge address</div> -->
+                        </div>
+                    </div> 
+                      <div class="form-group">
+                        <label>Status on Mobile App</label>
+                        <!-- <input type="number" formControlName="status" class="form-control" min="0" max="1"
+                            [ngClass]="{ 'is-invalid': submitted && f.status.errors }" placeholder=""> -->
+                            <select class="form-control"  formControlName="status">
+                                <option value="" disabled>ON/OFF on Mobile App</option>
+                                <option [ngValue]="1">ON</option>
+                                <option [ngValue]="0">OFF</option>
+                            </select>
+                        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                            <div *ngIf="f.challange.errors.required">Status is required</div>
+                            <!-- <div *ngIf="f.challenge.errors.challenge">challenge must be a valid challenge address</div> -->
+                        </div>
+                    </div>
+                    <hr>
+                    <div formArrayName="response">
+                        <div *ngFor="let response of editForm.get('response')['controls']; let i=index">
+                            <div>
+                                <span>Response {{i + 1}}</span>
+                                <span *ngIf="editForm.get('response').length > 1"
+                                    (click)="removeResponse(i)">Remove
+                                </span>
+                            </div>
+                            <div [formGroupName]="i">
+                                <!--yes-->
+                                <div>
+                                    <label>Yes</label>
+                                    <input type="text" formControlName="yes"  class="form-control">
+                                    <!--display error message if yes is not valid-->
+                                    <small [hidden]="editForm.controls.response.controls[i].controls.yes.valid">
+                                        yes is required
+                                    </small>
+                                </div>
+                                <!--postcode-->
+                                <div>
+                                    <label>No</label>
+                                    <input type="text" formControlName="no"  class="form-control">
+                                    <small [hidden]="editForm.controls.response.controls[i].controls.no.valid">
+                                        No is required
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="margin-20">
+                        <a (click)="addResponse()" style="cursor: default">
+                          Add another Response +
+                        </a>
+                      </div>
+                      <hr>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Update Lesson</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
