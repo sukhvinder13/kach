@@ -16,6 +16,7 @@ import { EditQuizComponent } from './component/edit-quiz/edit-quiz.component';
 import { EditLessonComponent } from './component/edit-lesson/edit-lesson.component';
 import { LoginComponent } from './component/login/login.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,

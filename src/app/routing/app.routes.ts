@@ -7,28 +7,29 @@ import { EditQuizComponent } from '../component/edit-quiz/edit-quiz.component';
 import { EditLessonComponent } from '../component/edit-lesson/edit-lesson.component';
 import { LoginComponent } from '../component/login/login.component';
 import { AppComponent } from '../app.component';
+import {  GuardGuard } from '../services/auth.guard';
 
 export const appRoutes:Routes=[
     // {path:"",component:LoginComponent},
     { path: '', pathMatch: 'full', redirectTo: 'login'},
     { path:'login',component: LoginComponent},
     {path:"quiz",component:AppComponent,children:[{
-        path:'',component:QuizComponent
+        path:'',component:QuizComponent,canActivate: [GuardGuard]
     }]},
     {path:"lesson",component:AppComponent,children:[{
-        path:'',component:LessonComponent
+        path:'',component:LessonComponent,canActivate: [GuardGuard]
     }]},
     {path:"manageQuiz",component:AppComponent,children:[{
-        path:'',component:ManageQuizComponent
+        path:'',component:ManageQuizComponent,canActivate: [GuardGuard]
     }]},
     {path:"edit-quiz/:id",component:AppComponent,children:[{
-        path:'',component:EditQuizComponent
+        path:'',component:EditQuizComponent,canActivate: [GuardGuard]
     }]},
         {path:"edit-lesson/:id",component:AppComponent,children:[{
-        path:'',component:EditLessonComponent
+        path:'',component:EditLessonComponent,canActivate: [GuardGuard]
     }]},
      {path:"manageLesson",component:AppComponent,children:[{
-        path:'',component:ManageLessonComponent
+        path:'',component:ManageLessonComponent,canActivate: [GuardGuard]
     }]},
 
     // {path:"quiz",component:QuizComponent},
