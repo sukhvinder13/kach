@@ -14,7 +14,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class LoginComponent implements OnInit {
 
   loginDetails: FormGroup;
-
+  isSubmitted:false;
   constructor(private _formbuilder: FormBuilder,
     private _service: ApiService,
     private router: Router,
@@ -26,11 +26,12 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     })
   }
-
+  get formControls() { return this.loginDetails.controls; }
 
   onSubmit() {
+  isSubmitted:true;
     if (this.loginDetails.invalid) {
-      alert('Please Fill the Mandatory Fields')
+      alert('Please Fill the Mandatory Fields');
     } else {
       this._service.loginUser(this.loginDetails.value).subscribe(token=>{
         // console.log(token);

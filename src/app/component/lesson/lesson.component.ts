@@ -49,13 +49,13 @@ export class LessonComponent implements OnInit {
   }
   //file upload
   onFileSelected(event) {
-    console.log(event);
+    // console.log(event);
     this.selectedFile = <File>event.target.files[0];
   }
 
   get f() { return this.addLesson.controls; }
   changeStatus(e) {
-    console.log(e.value)
+    // console.log(e.value)
     this.status.setValue(e.target.value, {
       onlySelf: true
     })
@@ -83,7 +83,7 @@ export class LessonComponent implements OnInit {
       console.log(formData);
       this.LessonService.createLesson(formData).subscribe(
         (res) => {
-          console.log('Lesson successfully created!')
+          // console.log('Lesson successfully created!')
           // this.ngZone.run(() => this.router.navigateByUrl('/employees-list'))
           alert('SUCCESS!! Lesson Saved SuccessFully')
           // this.addLesson.reset(this.addLesson.value);
