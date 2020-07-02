@@ -1,5 +1,12 @@
-<!-- main app container -->
-<h4>Add Lesson</h4>
+<div class="row">
+    <div class="col-md-6">
+        <h4> Add Lesson</h4>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-danger float-right " [routerLink]="['/manageLesson']">
+            Manage Lesson </button>
+    </div>
+</div>
 <hr>
 <div class="jumbotron">
     <div class="container">
@@ -7,10 +14,18 @@
             <div class="col-md-6 offset-md-3">
                 <form [formGroup]="addLesson" (ngSubmit)="onSubmit()">
                     <div class="form-group">
+                        <label> Lesson Name</label>
+                        <input type="text" formControlName="lessonName"  class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.lessonName.errors }" />
+                        <div *ngIf="submitted && f.lessonName.errors" class="invalid-feedback">
+                            <div *ngIf="f.lessonName.errors.required">Lesson Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>Audio</label>
                         <input type="file" formControlName="audioFilePath" accept="audio/*" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.audioFilePath.errors }" 
-                            (change)="onFileSelected($event)"  />
+                            [ngClass]="{ 'is-invalid': submitted && f.audioFilePath.errors }"
+                            (change)="onFileSelected($event)" />
                         <div *ngIf="submitted && f.audioFilePath.errors" class="invalid-feedback">
                             <div *ngIf="f.audioFilePath.errors.required">Audio is required</div>
                         </div>
@@ -33,29 +48,40 @@
                         </div>
                     </div>
                     <hr>
-                    <div formArrayName="response">
-                        <div *ngFor="let response of addLesson.get('response')['controls']; let i=index">
+                    <div formArrayName="responseYes">
+                        <div *ngFor="let responseYes of addLesson.get('responseYes')['controls']; let i=index">
                             <div>
-                                <span>Response {{i + 1}}</span>
-                                <span *ngIf="addLesson.get('response').length > 1"
-                                    (click)="removeResponse(i)">Remove
+                                <span>Response Yes {{i + 1}}</span>
+                                <span *ngIf="addLesson.get('responseYes').length > 1" (click)="removeResponseYes(i)">Remove
                                 </span>
                             </div>
                             <div [formGroupName]="i">
                                 <!--yes-->
                                 <div>
                                     <label>Yes</label>
-                                    <input type="text" formControlName="yes"  class="form-control">
+                                    <input type="text" formControlName="yes" class="form-control">
                                     <!--display error message if yes is not valid-->
-                                    <small [hidden]="addLesson.controls.response.controls[i].controls.yes.valid">
+                                    <small [hidden]="addLesson.controls.responseYes.controls[i].controls.yes.valid">
                                         yes is required
                                     </small>
                                 </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div formArrayName="responseNo">
+                        <div *ngFor="let responseNo of addLesson.get('responseNo')['controls']; let i=index">
+                            <div>
+                                <span>Response No {{i + 1}}</span>
+                                <span *ngIf="addLesson.get('responseNo').length > 1" (click)="removeResponseNo(i)">Remove
+                                </span>
+                            </div>
+                            <div [formGroupName]="i">
                                 <!--postcode-->
                                 <div>
                                     <label>No</label>
-                                    <input type="text" formControlName="no"  class="form-control">
-                                    <small [hidden]="addLesson.controls.response.controls[i].controls.no.valid">
+                                    <input type="text" formControlName="no" class="form-control">
+                                    <small [hidden]="addLesson.controls.responseNo.controls[i].controls.no.valid">
                                         No is required
                                     </small>
                                 </div>
@@ -63,22 +89,16 @@
                         </div>
                     </div>
                     <div class="margin-20">
-                        <a (click)="addResponse()" style="cursor: default">
-                          Add another Response +
+                        <a (click)="addResponseYes()" style="cursor: default">
+                            Add Yes Response +
                         </a>
-                      </div>
-                      <hr>
-                      
-                    <!-- <div class="form-group">
-                        <label>Show on Mobile App?</label>
-                        <select class="custom-select" (change)="changeStatus($event)" formControlName="status">
-                            <option value=""></option>
-                            <option *ngFor="let status of status" [ngValue]="status.key">{{status.value}}</option>
-                          </select>
-                        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
-                            <div *ngIf="f.status.errors.required">Status is required</div>
-                        </div>
-                    </div> -->
+                    </div> 
+                    <div class="margin-20">
+                        <a (click)="addResponseNo()" style="cursor: default">
+                            Add No Response +
+                        </a>
+                    </div>
+                    <hr>
                     <div class="form-group">
                         <button class="btn btn-primary">Add Lesson</button>
                     </div>

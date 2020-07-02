@@ -9,7 +9,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class ManageQuizComponent implements OnInit {
   QuizData:any = [];
-
+  p:any;
   constructor(private formBuilder: FormBuilder,
     private quizService: QuizService) {
       this.readQuizData();

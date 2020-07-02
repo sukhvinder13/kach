@@ -24,7 +24,7 @@ export class QuizComponent implements OnInit {
       options: this.formBuilder.group({
         optionA: ['', Validators.required],
         optionB: ['', Validators.required],
-        optionC: ['', Validators.required],
+        optionC: [''],
         optionD: ['' ]
       }),
       correctoption: ['', [Validators.required,Validators.pattern(this.correctoption)]],

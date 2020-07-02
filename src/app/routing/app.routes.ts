@@ -8,11 +8,15 @@ import { EditLessonComponent } from '../component/edit-lesson/edit-lesson.compon
 import { LoginComponent } from '../component/login/login.component';
 import { AppComponent } from '../app.component';
 import {  GuardGuard } from '../services/auth.guard';
+import { QuickbootComponent } from '../component/quickboot/quickboot.component';
+import { FeedbackComponent } from '../component/feedback/feedback.component';
 
 export const appRoutes:Routes=[
     // {path:"",component:LoginComponent},
     { path: '', pathMatch: 'full', redirectTo: 'login'},
     { path:'login',component: LoginComponent},
+    { path:'chatBoot',component: QuickbootComponent},
+
     {path:"quiz",component:AppComponent,children:[{
         path:'',component:QuizComponent,canActivate: [GuardGuard]
     }]},
@@ -30,6 +34,9 @@ export const appRoutes:Routes=[
     }]},
      {path:"manageLesson",component:AppComponent,children:[{
         path:'',component:ManageLessonComponent,canActivate: [GuardGuard]
+    }]},
+     {path:"quizFeedback",component:AppComponent,children:[{
+        path:'',component:FeedbackComponent,canActivate: [GuardGuard]
     }]},
 
     // {path:"quiz",component:QuizComponent},

@@ -1,4 +1,13 @@
-<h4>Manage Lesson</h4><hr>
+<div class="row">
+  <div class="col-md-6">
+    <h4> Manage Lesson</h4>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-danger float-right " [routerLink]="['/lesson']">
+      Add Lesson </button>
+  </div>
+</div>
+<hr>
 <div class="container">
     <!-- No data message -->
     <!-- <p *ngIf="lessonData.length <= 0" class="no-data text-center">There is no lessonData added yet!</p> -->
@@ -9,6 +18,7 @@
         <tr>
           <th scope="col">#</th>
           <!-- <th scope="col">id</th> -->
+          <th scope="col">Lesson Name</th>
           <th scope="col">Summary</th>
           <th scope="col">Challange</th>
           <th scope="col">Response</th>
@@ -17,15 +27,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of lessonData.posts;let response of lessonData.posts[i].response; let i = index">
+        <tr *ngFor="let data of lessonData.posts | paginate:{ itemsPerPage: 10, currentPage: p };let i = index">
           <th scope="row">{{i+1}}</th>
           <!-- <th scope="row">{{data._id}}</th> -->
+          <td>{{data.lessonName}}</td>
           <td>{{data.summary}}</td>
           <td >{{data.challange}}</td>
-          <td ><div *ngFor="let response of lessonData.posts[i].response;let j = index ">
-          <span>Yes:-{{response.yes}}</span> <br>
-            <span>No:-{{response.no}}</span>
-          </div></td>
+          <td ><div *ngFor="let responseYes of lessonData.posts[i].responseYes;let j = index ">
+          <span>Yes:-{{responseYes.yes}}</span>
+        </div> 
+          <div *ngFor="let responseNo of lessonData.posts[i].responseNo">
+            <span>No:-{{responseNo.no}}</span>
+          </div><br>
+          </td>
           <td><span *ngIf="data.status==1">ON</span>
             <span *ngIf="data.status==0">OFF</span></td>
           <td class="text-center edit-block">
@@ -39,4 +53,5 @@
         </tr>
       </tbody>
     </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>

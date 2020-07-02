@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
           // console.log(token);
           localStorage.setItem('token',token.token);
           localStorage.setItem('userInfo',JSON.stringify(token.data));
-          this.router.navigate(['/quiz'])
+          this.router.navigate(['/manageQuiz'])
   
         }else{
           // console.log('message');

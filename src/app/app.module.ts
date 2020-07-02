@@ -16,7 +16,9 @@ import { EditQuizComponent } from './component/edit-quiz/edit-quiz.component';
 import { EditLessonComponent } from './component/edit-lesson/edit-lesson.component';
 import { LoginComponent } from './component/login/login.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-
+import { QuickbootComponent } from './component/quickboot/quickboot.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FeedbackComponent } from './component/feedback/feedback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,14 +29,17 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
     EditQuizComponent,
     EditLessonComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    QuickbootComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [DashboardComponent]

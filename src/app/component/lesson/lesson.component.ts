@@ -18,33 +18,54 @@ export class LessonComponent implements OnInit {
 
   ngOnInit() {
     this.addLesson = this.formBuilder.group({
+      lessonName: ['',Validators.required],
       audioFilePath: ['', Validators.required],
       summary: ['', Validators.required],
       challange: ['', Validators.required],
       // yes: ['', Validators.required],
       // no: ['', Validators.required],
       status: [1],
-      response: this.formBuilder.array([
-        this.initResponse(),
+      responseYes: this.formBuilder.array([
+        this.initResponseYes(),
+      ]),
+      responseNo: this.formBuilder.array([
+        this.initResponseNo(),
       ])
+
 
     });
   }
-  initResponse() {
+  initResponseYes() {
     return this.formBuilder.group({
       yes: ['', Validators.required],
+      // no: ['', Validators.required]
+    })
+  }
+  initResponseNo() {
+    return this.formBuilder.group({
+      // yes: ['', Validators.required],
       no: ['', Validators.required]
     })
   }
-  addResponse() {
+  addResponseYes() {
     // add address to the list
-    const control = <FormArray>this.addLesson.get('response');
-    control.push(this.initResponse());
+    const control = <FormArray>this.addLesson.get('responseYes');
+    control.push(this.initResponseYes());
+  }
+  addResponseNo() {
+    // add address to the list
+    const control = <FormArray>this.addLesson.get('responseNo');
+    control.push(this.initResponseNo());
   }
 
-  removeResponse(i: number) {
+  removeResponseYes(i: number) {
     // remove address from the list
-    const control = <FormArray>this.addLesson.get('response');
+    const control = <FormArray>this.addLesson.get('responseNO');
+    control.removeAt(i);
+  }
+  removeResponseNo(i: number) {
+    // remove address from the list
+    const control = <FormArray>this.addLesson.get('responseNO');
     control.removeAt(i);
   }
   //file upload
@@ -67,7 +88,10 @@ export class LessonComponent implements OnInit {
      formData.append('audioFilePath', this.selectedFile, this.selectedFile.name);
       for (let key in this.addLesson.value) 
       { 
-        if(key=='response'){
+        if(key=='responseYes'){
+          this.addLesson.value[key] = JSON.stringify(this.addLesson.value[key])
+        }
+        if(key=='responseNo'){
           this.addLesson.value[key] = JSON.stringify(this.addLesson.value[key])
         }
         // console.log(key,this.addLesson.value[key]);
@@ -87,7 +111,7 @@ export class LessonComponent implements OnInit {
           // this.ngZone.run(() => this.router.navigateByUrl('/employees-list'))
           alert('SUCCESS!! Lesson Saved SuccessFully')
           // this.addLesson.reset(this.addLesson.value);
-          this.addLesson.reset();
+          // this.addLesson.reset();
         }, (error) => {
           console.log(error);
         });

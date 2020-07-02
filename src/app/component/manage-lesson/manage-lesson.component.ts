@@ -8,7 +8,7 @@ import { LessonService } from 'src/app/services/lesson/lesson.service';
 })
 export class ManageLessonComponent implements OnInit {
   lessonData:any = [];
-
+   p:any;
   constructor(private lessonService:LessonService) { 
     this.readlessonData();
   }
