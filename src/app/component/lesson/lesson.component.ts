@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LessonService } from 'src/app/services/lesson/lesson.service';
 import { FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lesson',
@@ -12,18 +13,19 @@ export class LessonComponent implements OnInit {
   selectedFile: File = null;
   addLesson: FormGroup;
   submitted = false;
+  isLoading=false;
   status: any = [{ "value": "Yes", "key": "1" }, { "value": "No", "key": "0" }]
   constructor(private formBuilder: FormBuilder,
-    private LessonService: LessonService) { }
+    private LessonService: LessonService,
+    private router:Router) { }
 
   ngOnInit() {
+    this.isLoading=false;
     this.addLesson = this.formBuilder.group({
       lessonName: ['',Validators.required],
       audioFilePath: ['', Validators.required],
       summary: ['', Validators.required],
       challange: ['', Validators.required],
-      // yes: ['', Validators.required],
-      // no: ['', Validators.required],
       status: [1],
       responseYes: this.formBuilder.array([
         this.initResponseYes(),
@@ -37,14 +39,14 @@ export class LessonComponent implements OnInit {
   }
   initResponseYes() {
     return this.formBuilder.group({
-      yes: ['', Validators.required],
+      yes: [''],
       // no: ['', Validators.required]
     })
   }
   initResponseNo() {
     return this.formBuilder.group({
       // yes: ['', Validators.required],
-      no: ['', Validators.required]
+      no: ['']
     })
   }
   addResponseYes() {
@@ -71,7 +73,11 @@ export class LessonComponent implements OnInit {
   //file upload
   onFileSelected(event) {
     // console.log(event);
+    console.log( this.selectedFile);
+
     this.selectedFile = <File>event.target.files[0];
+    console.log( this.selectedFile);
+
   }
 
   get f() { return this.addLesson.controls; }
@@ -85,6 +91,7 @@ export class LessonComponent implements OnInit {
     this.submitted = true;
     //fileupload 
     let formData = new FormData();
+    console.log( this.selectedFile);
      formData.append('audioFilePath', this.selectedFile, this.selectedFile.name);
       for (let key in this.addLesson.value) 
       { 
@@ -100,18 +107,20 @@ export class LessonComponent implements OnInit {
        }
     // stop here if form is invalid
     if (!this.addLesson.valid) {
-      console.log('Lesson not created!')
+      console.log('Lesson not created!');
+      alert('Please Insert required fields');
       return false;
     } else {
       console.log(this.addLesson.value);
       console.log(formData);
+      this.isLoading=true;
       this.LessonService.createLesson(formData).subscribe(
         (res) => {
-          // console.log('Lesson successfully created!')
-          // this.ngZone.run(() => this.router.navigateByUrl('/employees-list'))
-          alert('SUCCESS!! Lesson Saved SuccessFully')
-          // this.addLesson.reset(this.addLesson.value);
+          alert('SUCCESS!! Lesson Saved SuccessFully');
+          this.isLoading=false;
           // this.addLesson.reset();
+          this.ngOnInit();
+          this.router.navigateByUrl('/lesson');
         }, (error) => {
           console.log(error);
         });

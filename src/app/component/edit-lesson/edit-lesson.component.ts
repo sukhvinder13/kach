@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { FormGroup, FormBuilder, Validators ,FormArray} from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { Lesson } from 'src/app/services/lesson/lesson.model';
 import { LessonService } from 'src/app/services/lesson/lesson.service';
 @Component({
@@ -11,11 +11,12 @@ import { LessonService } from 'src/app/services/lesson/lesson.service';
 export class EditLessonComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
-  lessonData:Lesson[];
+  lessonData: Lesson[];
   selectedFile: File = null;
-  audiofilepath:string;
-  responseDataYes:Array<any>
-  responseDataNo:Array<any>
+  audiofilepath: string;
+  responseDataYes: Array<any>;
+  responseDataNo: Array<any>;
+  isLoading = false;
 
   constructor(public formBuilder: FormBuilder,
     private actRoute: ActivatedRoute,
@@ -23,12 +24,13 @@ export class EditLessonComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.isLoading = false;
     this.updateLesson();
     let id = this.actRoute.snapshot.paramMap.get('id');
     this.getLesson(id);
     this.editForm = this.formBuilder.group({
       lessonName: ['', Validators.required],
-      audioFilePath: [null, Validators.required],
+      audioFilePath: [''],
       summary: ['', Validators.required],
       challange: ['', Validators.required],
       // yes: ['', Validators.required],
@@ -46,8 +48,8 @@ export class EditLessonComponent implements OnInit {
   getLesson(id: any) {
     this.lessonService.getLessonById(id).subscribe(data => {
       console.log(data);
-      this.responseDataYes=data['responseYes'];
-      this.responseDataNo=data['responseNo'];
+      this.responseDataYes = data['responseYes'];
+      this.responseDataNo = data['responseNo'];
       this.editForm.patchValue({
         // audioFilePath: data['audioFilePath'],
         summary: data['summary'],
@@ -56,54 +58,54 @@ export class EditLessonComponent implements OnInit {
         // response: data['response'],
         status: data['status'],
       });
-      this.audiofilepath=data.audioFilePath;
+      this.audiofilepath = data.audioFilePath;
       // console.log(data.response);
       // console.log(this.setResponse(data.response));
-    this.editForm.setControl('responseYes',this.setResponseYes(this.responseDataYes));
-    this.editForm.setControl('responseNo',this.setResponseNo(this.responseDataNo));
+      this.editForm.setControl('responseYes', this.setResponseYes(this.responseDataYes));
+      this.editForm.setControl('responseNo', this.setResponseNo(this.responseDataNo));
     });
   }
-  setResponseYes(responseSetYes):FormArray{
-    const formArray=new FormArray([]);
-    responseSetYes.forEach(s=>{
+  setResponseYes(responseSetYes): FormArray {
+    const formArray = new FormArray([]);
+    responseSetYes.forEach(s => {
       formArray.push(this.formBuilder.group({
-        yes:s.yes,
+        yes: s.yes,
         // no : s.no
       }))
     })
     return formArray;
-  } 
-  setResponseNo(responseSetNo):FormArray{
-    const formArray=new FormArray([]);
-    responseSetNo.forEach(s=>{
+  }
+  setResponseNo(responseSetNo): FormArray {
+    const formArray = new FormArray([]);
+    responseSetNo.forEach(s => {
       formArray.push(this.formBuilder.group({
         // yes:s.yes,
-        no : s.no
+        no: s.no
       }))
     })
     return formArray;
   }
-   // Getter to access form control
-   get f() {
+  // Getter to access form control
+  get f() {
     return this.editForm.controls;
   }
-    updateLesson() {
-      this.editForm = this.formBuilder.group({
-        audioFilePath: ['', Validators.required],
-        lessonName: ['', Validators.required],
-        summary: ['', Validators.required],
-        challange: ['', Validators.required],
-        // yes: ['', Validators.required],
-        // no: ['', Validators.required],
-        status:  ['', Validators.required],
-        responseYes: this.formBuilder.array([
-          this.initResponseYes(),
-        ]),
-        responseNo: this.formBuilder.array([
-          this.initResponseNo(),
-        ])
-  
-      });
+  updateLesson() {
+    this.editForm = this.formBuilder.group({
+      audioFilePath: [''],
+      lessonName: ['', Validators.required],
+      summary: ['', Validators.required],
+      challange: ['', Validators.required],
+      // yes: ['', Validators.required],
+      // no: ['', Validators.required],
+      status: ['', Validators.required],
+      responseYes: this.formBuilder.array([
+        this.initResponseYes(),
+      ]),
+      responseNo: this.formBuilder.array([
+        this.initResponseNo(),
+      ])
+
+    });
   }
   initResponseYes() {
     return this.formBuilder.group({
@@ -144,34 +146,38 @@ export class EditLessonComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
   onSubmit() {
-        //fileupload 
-        if(name==null){
-          alert('Please select audio file')
-        }
-        let formData = new FormData();
-        formData.append('audioFilePath', this.selectedFile, this.selectedFile.name);
-         for (let key in this.editForm.value) 
-         { 
-           if(key=='responseYes'){
-             this.editForm.value[key] = JSON.stringify(this.editForm.value[key])
-           }
-           if(key=='responseNo'){
-            this.editForm.value[key] = JSON.stringify(this.editForm.value[key])
-          }
-           // console.log(key,this.editForm.value[key]);
-           formData.append(key, this.editForm.value[key]);
-           // console.log(key);
-          }
-       // stop here if form is invalid
+    //fileupload 
+    if (name == null) {
+      alert('Please select audio file')
+    }
+    let formData = new FormData();
+    if (this.selectedFile) {
+      formData.append('audioFilePath', this.selectedFile, this.selectedFile.name);
+    }
+    for (let key in this.editForm.value) {
+      if (key == 'responseYes') {
+        this.editForm.value[key] = JSON.stringify(this.editForm.value[key])
+      }
+      if (key == 'responseNo') {
+        this.editForm.value[key] = JSON.stringify(this.editForm.value[key])
+      }
+      // console.log(key,this.editForm.value[key]);
+      formData.append(key, this.editForm.value[key]);
+      // console.log(key);
+    }
+    // stop here if form is invalid
     this.submitted = true;
     if (!this.editForm.valid) {
+      console.log('not created');
       return false;
     } else {
       if (window.confirm('Are you sure?')) {
         let id = this.actRoute.snapshot.paramMap.get('id');
+        this.isLoading = true;
         this.lessonService.updateLesson(id, this.editForm.value)
           .subscribe(res => {
-            alert('Lesson Updated Successfully')
+            alert('Lesson Updated Successfully');
+            this.isLoading = false;
             this.router.navigateByUrl('/manageLesson');
           }, (error) => {
             console.log(error)

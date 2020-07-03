@@ -19,6 +19,9 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { QuickbootComponent } from './component/quickboot/quickboot.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FeedbackComponent } from './component/feedback/feedback.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,10 @@ import { FeedbackComponent } from './component/feedback/feedback.component';
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [DashboardComponent]

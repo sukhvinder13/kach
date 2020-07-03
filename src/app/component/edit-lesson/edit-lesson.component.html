@@ -17,9 +17,9 @@
                     </div>
                     <div class="form-group">
                         <label>Audio</label>
-                        <input type="file" formControlName="audioFilePath" accept="audio/*" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.audioFilePath.errors }" 
+                        <input type="file"  accept="audio/*" class="form-control" id="audioFilePath"
                             (change)="onFileSelected($event)"  />{{audiofilepath}}
+                            <input type="hidden" name="fileHidden" formControlName="audioFilePath"/>
                         <div *ngIf="submitted && f.audioFilePath.errors" class="invalid-feedback">
                             <div *ngIf="f.audioFilePath.errors.required">Audio is required</div>
                         </div>
@@ -107,9 +107,11 @@
                         </a>
                     </div>
                       <hr>
-                    <div class="form-group">
+                      <mat-progress-spinner *ngIf="isLoading"
+                        mode="indeterminate" diameter='30' strokeWidth='10'>Please Wait...</mat-progress-spinner>
+                    <div class="form-group" *ngIf="!isLoading">
                         <button class="btn btn-primary">Update Lesson</button>
-                    </div>
+                     </div>
                 </form>
             </div>
         </div>
