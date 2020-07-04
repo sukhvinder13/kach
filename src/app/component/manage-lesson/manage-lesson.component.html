@@ -21,6 +21,7 @@
           <th scope="col">Lesson Name</th>
           <th scope="col">Summary</th>
           <th scope="col">Challange</th>
+          <th scope="col">Sequence No</th>
           <th scope="col">Response</th>
           <th scope="col">Status</th>
           <th scope="col center">Edit/Delete</th>
@@ -33,6 +34,7 @@
           <td>{{data.lessonName}}</td>
           <td>{{data.summary}}</td>
           <td >{{data.challange}}</td>
+          <td >{{data.sequenceNo}}</td>
           <td ><div *ngFor="let responseYes of lessonData.posts[i].responseYes;let j = index ">
           <span>Yes:-{{responseYes.yes}}</span>
         </div> 

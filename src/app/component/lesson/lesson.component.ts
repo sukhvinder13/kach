@@ -26,6 +26,7 @@ export class LessonComponent implements OnInit {
       audioFilePath: ['', Validators.required],
       summary: ['', Validators.required],
       challange: ['', Validators.required],
+      sequenceNo: ['', Validators.required],
       status: [1],
       responseYes: this.formBuilder.array([
         this.initResponseYes(),

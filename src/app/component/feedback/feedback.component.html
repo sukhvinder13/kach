@@ -17,8 +17,9 @@
     <thead class="table-success">
       <tr>
         <th scope="col">#</th>
-        <!-- <th scope="col">id</th> -->
-        <th scope="col">UserName</th>
+        <th scope="col">Created At</th>
+        <th scope="col">User Name</th>
+        <th scope="col">Email</th>
         <th scope="col">Question</th>
         <th scope="col">Answer</th>
       </tr>
@@ -26,10 +27,12 @@
     <tbody>
       <tr *ngFor="let data of feedbackData.quizfeedback | paginate:{ itemsPerPage: 10, currentPage: p };let i = index">
         <td scope="row">{{i+1}}</td>
-        <td>{{data.username}}</td>
+        <td>{{data.createdAt|date:'dd-mm-yyyy'}}</td>
+        <td>{{data.name}}</td>
+        <td>{{data.email}}</td>
         <td>
           <div *ngFor="let data1 of feedbackData.quizfeedback[i].data">
-            {{data1.questionId}}
+            {{data1.question}}
           </div>
         </td>
         <td>

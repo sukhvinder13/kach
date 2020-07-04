@@ -47,6 +47,15 @@
                             <!-- <div *ngIf="f.challenge.errors.challenge">challenge must be a valid challenge address</div> -->
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Sequence No</label>
+                        <input type="number" formControlName="sequenceNo" class="form-control" 
+                          min="1"  [ngClass]="{ 'is-invalid': submitted && f.sequenceNo.errors }" />
+                        <div *ngIf="submitted && f.sequenceNo.errors" class="invalid-feedback">
+                            <div *ngIf="f.sequenceNo.errors.required">Sequence No is required</div>
+                            <!-- <div *ngIf="f.challenge.errors.challenge">challenge must be a valid challenge address</div> -->
+                        </div>
+                    </div>
                     <hr>
                     <div formArrayName="responseYes">
                         <div *ngFor="let responseYes of addLesson.get('responseYes')['controls']; let i=index">

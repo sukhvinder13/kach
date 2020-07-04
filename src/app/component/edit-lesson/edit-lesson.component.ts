@@ -33,6 +33,7 @@ export class EditLessonComponent implements OnInit {
       audioFilePath: [''],
       summary: ['', Validators.required],
       challange: ['', Validators.required],
+      sequenceNo: ['', Validators.required],
       // yes: ['', Validators.required],
       // no: ['', Validators.required],
       status: ['', Validators.required],
@@ -55,6 +56,8 @@ export class EditLessonComponent implements OnInit {
         summary: data['summary'],
         lessonName: data['lessonName'],
         challange: data['challange'],
+      sequenceNo:data['sequenceNo'],
+
         // response: data['response'],
         status: data['status'],
       });
@@ -95,6 +98,7 @@ export class EditLessonComponent implements OnInit {
       lessonName: ['', Validators.required],
       summary: ['', Validators.required],
       challange: ['', Validators.required],
+      sequenceNo: ['', Validators.required],
       // yes: ['', Validators.required],
       // no: ['', Validators.required],
       status: ['', Validators.required],
