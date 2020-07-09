@@ -22,6 +22,9 @@ import { FeedbackComponent } from './component/feedback/feedback.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { SafeHtmlPipe } from './services/pipe.safepipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +37,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     LoginComponent,
     DashboardComponent,
     QuickbootComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     NgxPaginationModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    AngularEditorModule,
   ],
   providers: [],
   bootstrap: [DashboardComponent]

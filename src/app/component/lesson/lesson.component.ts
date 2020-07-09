@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LessonService } from 'src/app/services/lesson/lesson.service';
 import { FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-lesson',
@@ -14,13 +15,17 @@ export class LessonComponent implements OnInit {
   addLesson: FormGroup;
   submitted = false;
   isLoading=false;
-  status: any = [{ "value": "Yes", "key": "1" }, { "value": "No", "key": "0" }]
+  status: any = [{ "value": "Yes", "key": "1" }, { "value": "No", "key": "0" }];
+  lessonData:any=[];
+  statusArray:any=[];
+
   constructor(private formBuilder: FormBuilder,
     private LessonService: LessonService,
     private router:Router) { }
 
   ngOnInit() {
     this.isLoading=false;
+    this.getLesson();
     this.addLesson = this.formBuilder.group({
       lessonName: ['',Validators.required],
       audioFilePath: ['', Validators.required],
@@ -34,9 +39,26 @@ export class LessonComponent implements OnInit {
       responseNo: this.formBuilder.array([
         this.initResponseNo(),
       ])
-
-
     });
+  }
+  //get lessom=n
+  getLesson(){
+    this.LessonService.getLessonData().subscribe((data)=>{
+      this.lessonData=data['posts'];
+      console.log(this.lessonData);
+      for(let i=0;i<=this.lessonData.length;i++){
+        this.statusArray.push(this.lessonData[i].sequenceNo);
+      }
+    })
+  }
+  // check seq no
+  checkSequenceNo(){
+    this.addLesson.value.sequenceNo;
+    for(let i=0;i<this.statusArray.length;i++){
+      if(this.addLesson.value.sequenceNo==this.statusArray[i]){
+        alert('Sequence No  '+ this.addLesson.value.sequenceNo +' already exist please enter another sequence');
+      }
+    }
   }
   initResponseYes() {
     return this.formBuilder.group({
@@ -127,4 +149,34 @@ export class LessonComponent implements OnInit {
         });
     }
   }
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      ['superscript','link','unlink','insertImage','insertVideo',
+      'insertHorizontalRule','justifyLeft','justifyCenter','justifyRight','justifyFull','indent',
+    'outdent','strikeThrough','subscript','foregroundColorPicker','backgroundColorPicker' ]
+      ],
+    customClasses: [
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ]
+  };
 }

@@ -48,7 +48,7 @@ export class LessonService {
     // Update employee
     updateLesson(id, data): Observable<any> {
       // let url = `${this.baseUri}/update/${id}`;
-      return this.http.put(environment.baseUrl + `/updateLesson/${id}`, data, { headers: this.headers }).pipe(
+      return this.http.put(environment.baseUrl + `/updateLesson/${id}`, data).pipe(
         catchError(this.errorMgmt)
       )
     }

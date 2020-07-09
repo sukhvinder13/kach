@@ -27,17 +27,17 @@
     <tbody>
       <tr *ngFor="let data of feedbackData.quizfeedback | paginate:{ itemsPerPage: 10, currentPage: p };let i = index">
         <td scope="row">{{i+1}}</td>
-        <td>{{data.createdAt|date:'dd-mm-yyyy'}}</td>
+        <td>{{data.createdAt | date: 'dd/MMM/yyyy'}}</td>
         <td>{{data.name}}</td>
         <td>{{data.email}}</td>
         <td>
-          <div *ngFor="let data1 of feedbackData.quizfeedback[i].data">
-            {{data1.question}}
+          <div *ngFor="let data1 of feedbackData.quizfeedback[i].data;let j=index">
+           {{j+1}}- {{data1.fullQuestion}}
           </div>
         </td>
         <td>
-          <div *ngFor="let data1 of feedbackData.quizfeedback[i].data">
-            {{data1.answer}}
+          <div *ngFor="let data1 of feedbackData.quizfeedback[i].data;let k=index">
+            {{k+1}}- {{data1.response}}
           </div>
         </td>
 
