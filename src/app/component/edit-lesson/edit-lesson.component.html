@@ -26,17 +26,17 @@
                     </div>
                     <div class="form-group">
                         <label>Summary</label>
-                        <angular-editor type="text" formControlName="summary" class="form-control"
-                        [config]="config" style="height: fit-content"
+                        <textarea type="text" formControlName="summary" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.summary.errors }">
-                        </angular-editor>
+                        </textarea>
                         <div *ngIf="submitted && f.summary.errors" class="invalid-feedback">
                             <div *ngIf="f.summary.errors.required">Summary is required</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Challenge</label>
-                        <textarea type="text" formControlName="challange" class="form-control"
+                        <textarea type="text" formControlName="challange" 
+                         class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.challange.errors }">
                         </textarea>
                         <div *ngIf="submitted && f.challange.errors" class="invalid-feedback">
